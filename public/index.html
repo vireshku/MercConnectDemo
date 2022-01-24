@@ -4,76 +4,75 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Heroku Connect Demo App</title>
+    <title>Phone Changer</title>
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
     <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
     <style>
-		body {
-				padding-top: 60px;
-		}
-	</style>
-	<script> 
-		$(function() {
-        	$("#phoneChangerForm").submit(function(event) {
-            event.preventDefault();
+        body {
+            padding-top: 60px;
+        }
+    </style>
+    <script>
+        $(function() {
+            $("#phoneChangerForm").submit(function(event) {
+                event.preventDefault();
 
-            var errorMessage = $("#errorMessage");
-            var error = $("#error");
-            error.hide();
+                var errorMessage = $("#errorMessage");
+                var error = $("#error");
+                error.hide();
 
-            $("#message").hide();
+                $("#message").hide();
 
-            var firstName = $("#firstName").val();
-            var lastName = $("#lastName").val();
-            var email = $("#email").val();
-            var phone = $("#phone").val();
+                var firstName = $("#firstName").val();
+                var lastName = $("#lastName").val();
+                var email = $("#email").val();
+                var phone = $("#phone").val();
 
-            if (firstName.length == 0 || lastName.length == 0 || email.length == 0 || phone.length == 0) {
-                errorMessage.text("All of the fields are required.");
-                error.show();
-            }
-            else {
-                $.ajax({
-                    url: event.target.action,
-                    method: event.target.method,
-                    data: JSON.stringify({
-                        firstName: firstName,
-                        lastName: lastName,
-                        email: email,
-                        phone: phone
-                    }),
-                    contentType: "application/json; charset=utf-8",
-                    dataType: "json",
-                    success: function(data) {
-                        $("#firstName").val("");
-                        $("#lastName").val("");
-                        $("#email").val("");
-                        $("#phone").val("");
-                        $("#messageMessage").text("Record updated!");
-                        $("#message").show();
-                    },
-                    error: function(err) {
-                    	alert(err.responseJSON.error);
-                        errorMessage.text(err.responseJSON.error);
-                        error.show();
-                    }
-                })
-            }
+                if (firstName.length == 0 || lastName.length == 0 || email.length == 0 || phone.length == 0) {
+                    errorMessage.text("All of the fields are required.");
+                    error.show();
+                }
+                else {
+                    $.ajax({
+                        url: event.target.action,
+                        method: event.target.method,
+                        data: JSON.stringify({
+                            firstName: firstName,
+                            lastName: lastName,
+                            email: email,
+                            phone: phone
+                        }),
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        success: function(data) {
+                            $("#firstName").val("");
+                            $("#lastName").val("");
+                            $("#email").val("");
+                            $("#phone").val("");
+                            $("#messageMessage").text("Record updated!");
+                            $("#message").show();
+                        },
+                        error: function(err) {
+                        	alert(err.responseJSON.error);
+                            errorMessage.text(err.responseJSON.error);
+                            error.show();
+                        }
+                    })
+                }
+            });
         });
-    });
-   </script>
+
+    </script>
 </head>
-
 <body>
-
- <nav class="navbar navbar-inverse navbar-fixed-top">
+    <nav class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
                 <a class="navbar-brand" href="/">Phone Number Changer</a>
             </div>
         </div>
     </nav>
-    
+
     <div class="container">
         <form id="phoneChangerForm" action="/update" method="post" style="width: 400px">
             <div class="panel panel-default">
@@ -113,6 +112,5 @@
             </div>
         </form>
     </div>
-
 </body>
 </html>
